@@ -1,0 +1,44 @@
+# ============================================
+# xiao-proxy Docker 部署
+# 直接使用 node:18.20-alpine 基础镜像
+# 启动时自动拉取代码、安装依赖、运行服务
+# ============================================
+
+version: "3.8"
+
+services:
+  xiao-proxy:
+    image: node:18.20-alpine
+    container_name: xiao-proxy
+    restart: unless-stopped
+
+    ports:
+      - "3000:3000"
+
+    # 挂载全部宿主机设备（ttyACM* 串口）
+    volumes:
+      - /dev:/dev
+      - /run/udev:/run/udev:ro
+
+    privileged: true
+
+    working_dir: /app
+
+    environment:
+      - NODE_ENV=production
+      - TZ=Asia/Shanghai
+
+    # 启动时安装依赖 + 克隆代码 + 运行
+    command: >
+      sh -c "
+        apk add --no-cache python3 make g++ linux-headers eudev-dev udev git &&
+        git clone --depth=1 https://ghproxy.net/https://github.com/zcwisg/xiao-proxy.git /app &&
+        npm install --production && npm cache clean --force &&
+        node server.js
+      "
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
