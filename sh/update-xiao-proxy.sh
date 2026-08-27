@@ -2,7 +2,7 @@
 set -e
 
 TARGET_DIR="/opt/xiao-proxy"
-REPO_URL="https://ghproxy.net/https://github.com/zcwisg/xiao-proxy.git"
+REPO_URL="https://gh-proxy.cn/https://github.com/zcwisg/xiao-proxy.git"
 TEMP_DIR=$(mktemp -d)
 
 echo "=== 升级 xiao-proxy ==="
