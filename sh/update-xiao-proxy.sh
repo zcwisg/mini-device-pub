@@ -10,6 +10,9 @@ echo "=== 升级 xiao-proxy ==="
 #关闭系统自动更新
 systemctl stop unattended-upgrades && systemctl disable --now unattended-upgrades && systemctl disable apt-daily-upgrade.timer
 
+# 停止 ModemManager
+systemctl stop ModemManager && sudo systemctl disable ModemManager && systemctl mask ModemManager
+
 # 1. 下载更新包
 echo "下载更新包..."
 curl -fsSL -o "$TEMP_DIR/xiao-proxy-code.zip" "$ZIP_URL"
