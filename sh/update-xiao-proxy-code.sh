@@ -25,4 +25,16 @@ rm -rf "$TEMP_DIR"
 echo "设置权限..."
 chmod -R 777 "$TARGET_DIR"
 
-echo "=== 代码更新完成 ==="
+# 5. 安装依赖
+echo "安装依赖..."
+cd "$TARGET_DIR"
+./install.sh
+
+echo "=== 升级完成 ==="
+
+# 5. 重启服务
+echo "重启 xiao-proxy 服务..."
+systemctl restart xiao-proxy
+
+# 6. 查看服务状态
+systemctl status xiao-proxy
