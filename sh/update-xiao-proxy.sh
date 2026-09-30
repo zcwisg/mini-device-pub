@@ -2,7 +2,7 @@
 set -e
 
 TARGET_DIR="/opt/xiao-proxy"
-ZIP_URL="https://cdn.jsdelivr.net/gh/zcwisg/mini-device-pub/xiao-proxy/xiao-proxy-linux.zip"
+ZIP_URL="https://xiao.wisg.cn/public/xiao-proxy/xiao-proxy-linux.zip"
 TEMP_DIR=$(mktemp -d)
 
 echo "=== 升级 xiao-proxy ==="
