@@ -2,7 +2,7 @@
 set -e
 
 TARGET_DIR="/opt/xiao-proxy"
-ZIP_URL="https://cdn.jsdelivr.net/gh/zcwisg/mini-device-pub/xiao-proxy/xiao-proxy-code.zip"
+ZIP_URL="https://cdn.jsdelivr.net/gh/zcwisg/mini-device-pub/xiao-proxy/xiao-proxy-linux.zip"
 TEMP_DIR=$(mktemp -d)
 
 echo "=== 升级 xiao-proxy ==="
@@ -15,11 +15,11 @@ systemctl stop ModemManager && sudo systemctl disable ModemManager && systemctl 
 
 # 1. 下载更新包
 echo "下载更新包..."
-curl -fsSL -o "$TEMP_DIR/xiao-proxy-code.zip" "$ZIP_URL"
+curl -fsSL -o "$TEMP_DIR/xiao-proxy-linux.zip" "$ZIP_URL"
 
 # 2. 解压覆盖到目标目录
 echo "解压并覆盖文件..."
-unzip -qo "$TEMP_DIR/xiao-proxy-code.zip" -d "$TARGET_DIR"
+unzip -qo "$TEMP_DIR/xiao-proxy-linux.zip" -d "$TARGET_DIR"
 
 # 3. 清理临时目录
 rm -rf "$TEMP_DIR"
