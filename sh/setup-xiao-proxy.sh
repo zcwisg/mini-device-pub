@@ -3,7 +3,7 @@ sudo -H bash -lc '
 set -Eeuo pipefail
 cd /opt && \
 apt update && \
-apt-get install -y unzip network-manager && \
+apt-get install -y unzip network-manager build-essential && \
 curl -L -O https://xiao.wisg.site/public/xiao-proxy/xiao-proxy-linux.zip \
 mkdir -p /opt/xiao-proxy && \
 unzip -o xiao-proxy-linux.zip -d /opt/xiao-proxy && \
