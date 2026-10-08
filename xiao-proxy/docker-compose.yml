@@ -1,11 +1,8 @@
 # ============================================
 # xiao-proxy Docker 部署
-# 使用 Dockerfile 多阶段构建
 # 构建: docker compose build
 # 启动: docker compose up -d
 # ============================================
-
-version: "3.8"
 
 services:
   xiao-proxy:

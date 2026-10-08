@@ -43,7 +43,7 @@ echo "[2/4] 停止旧服务（如有）..."
 docker compose down 2>/dev/null && echo "      旧服务已停止" || echo "      无旧服务"
 
 # ---- 清理旧镜像（重新构建） ----
-echo "[3/4] 构建镜像（含 native 模块编译，首次约 3-5 分钟）..."
+echo "[3/4] 构建镜像（首次约 1-2 分钟，含依赖下载）..."
 docker compose build --no-cache
 
 # ---- 启动服务 ----

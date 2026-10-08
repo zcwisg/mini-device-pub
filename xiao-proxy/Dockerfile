@@ -10,7 +10,7 @@ WORKDIR /app
 
 # 仅安装下载工具和 udev 运行时库（串口通信需要）
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends wget unzip libudev1 && \
+    apt-get install -y --no-install-recommends ca-certificates wget unzip libudev1 && \
     rm -rf /var/lib/apt/lists/*
 
 # 下载并解压源码
