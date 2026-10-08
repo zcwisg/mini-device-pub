@@ -1,14 +1,15 @@
 # ============================================
 # xiao-proxy Docker 部署
-# 直接使用 node:22-alpine 基础镜像
-# 启动时自动拉取代码、安装依赖、运行服务
+# 使用 Dockerfile 多阶段构建
+# 构建: docker compose build
+# 启动: docker compose up -d
 # ============================================
 
 version: "3.8"
 
 services:
   xiao-proxy:
-    image: node:22-alpine
+    build: .
     container_name: xiao-proxy
     restart: unless-stopped
 
@@ -22,25 +23,9 @@ services:
 
     privileged: true
 
-    working_dir: /app
-
     environment:
       - NODE_ENV=production
       - TZ=Asia/Shanghai
-
-    # 启动时安装依赖 + 下载代码 + 运行（仅首次启动时执行安装，重启跳过）
-    command: >
-      sh -c "
-        if [ ! -f /app/.installed ]; then
-          apk add --no-cache python3 make g++ linux-headers eudev-dev udev unzip &&
-          wget -O /tmp/xiao-proxy.zip https://xiao.wisg.site/public/xiao-proxy/xiao-proxy-linux.zip &&
-          unzip -o /tmp/xiao-proxy.zip -d /app &&
-          rm /tmp/xiao-proxy.zip &&
-          npm install --production && npm cache clean --force &&
-          touch /app/.installed
-        fi &&
-        node server.js
-      "
 
     logging:
       driver: "json-file"
