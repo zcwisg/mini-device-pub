@@ -1,34 +1,25 @@
 # ============================================
-# xiao-proxy Dockerfile（多阶段构建）
-# 阶段1: 构建 - 编译 native 模块
-# 阶段2: 运行 - 最小镜像，秒启动
+# xiao-proxy Dockerfile
+# 使用 node:22-slim（Debian/glibc）基础镜像
+# serialport + sqlite3 使用预编译二进制，无需编译
 # ============================================
 
-# ---- 构建阶段 ----
-FROM node:22-alpine AS builder
-
-RUN apk add --no-cache python3 make g++ linux-headers eudev-dev udev unzip wget
+FROM node:22-slim
 
 WORKDIR /app
 
-# 下载并解压源代码
+# 仅安装下载工具和 udev 运行时库（串口通信需要）
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends wget unzip libudev1 && \
+    rm -rf /var/lib/apt/lists/*
+
+# 下载并解压源码
 RUN wget -O /tmp/xiao-proxy.zip https://xiao.wisg.site/public/xiao-proxy/xiao-proxy-linux.zip && \
     unzip /tmp/xiao-proxy.zip -d /app && \
     rm /tmp/xiao-proxy.zip
 
-# 安装依赖（编译 native 模块）
+# 安装依赖（预编译二进制自动下载，无需 python/make/g++）
 RUN npm install --production && npm cache clean --force
-
-# ---- 运行阶段 ----
-FROM node:22-alpine
-
-WORKDIR /app
-
-# 仅复制编译好的产物
-COPY --from=builder /app /app
-
-# 运行时不需要编译工具，只需 udev 运行时库（串口通信需要）
-RUN apk add --no-cache eudev udev
 
 ENV NODE_ENV=production
 ENV TZ=Asia/Shanghai
