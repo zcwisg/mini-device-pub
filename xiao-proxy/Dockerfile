@@ -34,7 +34,7 @@ COPY --from=builder /app /app
 
 # 仅安装运行时库（串口通信需要 libudev）
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends libudev1 && \
+    apt-get install -y --no-install-recommends udev && \
     rm -rf /var/lib/apt/lists/*
 
 ENV NODE_ENV=production
