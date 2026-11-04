@@ -15,8 +15,6 @@ fail() {
 for cmd in curl unzip systemctl systemd-run mktemp cp chmod rm find readlink cat sleep; do
     command -v "$cmd" >/dev/null 2>&1 || fail "缺少必要命令：$cmd"
 done
-[[ -f "$TARGET_DIR/xiao-proxy" && -f "$TARGET_DIR/start.sh" ]] || \
-    fail "请在程序所在目录运行，当前目录必须包含 xiao-proxy 和 start.sh。"
 [[ "$(systemctl show "$SERVICE" --property=LoadState --value)" == "loaded" ]] || \
     fail "$SERVICE 未安装或无法加载。"
 SERVICE_DIR="$(systemctl show "$SERVICE" --property=WorkingDirectory --value)"
