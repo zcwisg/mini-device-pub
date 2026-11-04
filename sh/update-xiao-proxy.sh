@@ -67,3 +67,4 @@ if ! systemctl is-active --quiet "$SERVICE"; then
 fi
 
 printf '=== 更新完成，%s 已启动 ===\n' "$SERVICE"
+rm -f -- "$TARGET_DIR/update-xiao-proxy.sh"
