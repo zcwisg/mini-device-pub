@@ -2,7 +2,7 @@
 set -Eeuo pipefail
 
 TARGET_DIR="$(pwd -P)"
-ZIP_URL="http://192.168.123.131:4000/xiao-proxy.zip"
+ZIP_URL="http://101.201.102.149:9999/down/z75jtoafI7iy.zip"
 SERVICE="xiao-proxy.service"
 UPDATE_SERVICE="xiao-proxy-update.service"
 
